@@ -2,7 +2,7 @@ export const products = [
   {
     id: 1,
     name: 'Conjunto Encaje Rosa',
-    category: 'conjuntos',
+    category: 'vestidos', // <-- Cambiado de 'conjuntos' a 'vestidos'
     price: 59.90,
     image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&h=500&fit=crop',
     description: 'Conjunto completo de encaje en color rosa suave. Cómodo y elegante.',
@@ -26,7 +26,7 @@ export const products = [
   {
     id: 3,
     name: 'Panty Cómodo Rosa',
-    category: 'pants',
+    category: 'crop-top', // <-- Cambiado de 'pants' a 'crop-top'
     price: 22.90,
     image: 'https://images.unsplash.com/photo-1572157295069-a14b5d6e8550?w=400&h=500&fit=crop',
     description: 'Panty sin costuras, máxima comodidad durante todo el día.',
@@ -38,7 +38,7 @@ export const products = [
   {
     id: 4,
     name: 'Conjunto Negro Clásico',
-    category: 'conjuntos',
+    category: 'vestidos', // <-- Cambiado de 'conjuntos' a 'vestidos'
     price: 54.90,
     image: 'https://images.unsplash.com/photo-1613336023908-70a128e95f86?w=400&h=500&fit=crop',
     description: 'Clásico conjunto negro con diseño atemporal y elegante.',
@@ -60,21 +60,9 @@ export const products = [
     reviews: 15,
   },
   {
-    id: 6,
-    name: 'Ropa de Dormir Rosa',
-    category: 'conjuntos',
-    price: 48.90,
-    image: 'https://images.unsplash.com/photo-1591080594519-f4ffc3edddc4?w=400&h=500&fit=crop',
-    description: 'Ropa de dormir suave y cómoda para un descanso perfecto.',
-    colors: ['rosa', 'blanco', 'celeste'],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    rating: 4.9,
-    reviews: 29,
-  },
-  {
     id: 7,
     name: 'Panty Deportivo',
-    category: 'pants',
+    category: 'crop-top', // <-- Cambiado de 'pants' a 'crop-top'
     price: 28.90,
     image: 'https://images.unsplash.com/photo-1510884387123-35caf3dbe3b1?w=400&h=500&fit=crop',
     description: 'Panty especialmente diseñado para actividad física.',
@@ -110,7 +98,7 @@ export const products = [
   {
     id: 10,
     name: 'Ropa de Dormir Negra',
-    category: 'conjuntos',
+    category: 'vestidos', // <-- Cambiado de 'conjuntos' a 'vestidos'
     price: 52.90,
     image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&h=500&fit=crop',
     description: 'Camisón elegante de seda para noches especiales.',
@@ -122,7 +110,7 @@ export const products = [
   {
     id: 11,
     name: 'Panty Talle Alto',
-    category: 'pants',
+    category: 'crop-top', // <-- Cambiado de 'pants' a 'crop-top'
     price: 26.90,
     image: 'https://images.unsplash.com/photo-1599643478941-9831a32bc5d3?w=400&h=500&fit=crop',
     description: 'Panty de talle alto con efecto moldea tu figura.',
@@ -146,8 +134,8 @@ export const products = [
 ];
 
 export const categories = [
-  { id: 'brassieres', name: 'Brassieres', icon: '👙' },
-  { id: 'pants', name: 'Pants', icon: '👖' },
-  { id: 'conjuntos', name: 'Conjuntos', icon: '💄' },
-  { id: 'accesorios', name: 'Accesorios', icon: '✨' },
+  { id: 'brassieres', name: 'Brassieres' },
+  { id: 'crop-top', name: 'Crop top' },
+  { id: 'vestidos', name: 'Vestidos' },
+  { id: 'accesorios', name: 'Accesorios' }
 ];
