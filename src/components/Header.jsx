@@ -9,34 +9,35 @@ export default function Header() {
   const cartTotal = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-md">
+    // Se cambió bg-white por bg-[#FFF5F3] para mimetizarse con el fondo del logo
+    <header className="sticky top-0 z-50 bg-[#FFF5F3] shadow-md">
       <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
-        {/* Logo */}
-<Link to="/" className="flex items-center">
-  <img
-    src={logo}
-    alt="Dimple"
-    className="h-16 md:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105"
-  />
-</Link>
+        <Link to="/" className="flex items-center">
+          <img
+            src={logo}
+            alt="Dimple"
+            className="h-16 md:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105"
+          />
+        </Link>
 
         {/* Desktop Menu */}
+        {/* Se actualizaron los textos a text-[#4A3B32] (chocolate) y el hover a hover:text-[#E29B9B] (rosa logo) */}
         <div className="hidden md:flex gap-8 items-center">
-          <Link to="/" className="text-gray-700 hover:text-pink-600 font-medium transition">
+          <Link to="/" className="text-[#4A3B32] hover:text-[#E29B9B] font-medium transition-colors duration-200">
             Inicio
           </Link>
-          <Link to="/tienda" className="text-gray-700 hover:text-pink-600 font-medium transition">
+          <Link to="/tienda" className="text-[#4A3B32] hover:text-[#E29B9B] font-medium transition-colors duration-200">
             Tienda
           </Link>
-          <a href="#categorias" className="text-gray-700 hover:text-pink-600 font-medium transition">
+          <a href="#categorias" className="text-[#4A3B32] hover:text-[#E29B9B] font-medium transition-colors duration-200">
             Categorías
           </a>
-          <a href="#footer" className="text-gray-700 hover:text-pink-600 font-medium transition">
+          <a href="#footer" className="text-[#4A3B32] hover:text-[#E29B9B] font-medium transition-colors duration-200">
             Contacto
           </a>
         </div>
-
+    
         {/* Cart Icon and Mobile Menu */}
         <div className="flex items-center gap-3">
           <Link
