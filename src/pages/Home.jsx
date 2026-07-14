@@ -119,17 +119,17 @@ export default function Home() {
             Nuestra colección de ropa íntima y ropa está diseñada pensando en ti, con materiales de la más alta calidad y diseños que combinan comodidad con estilo.
           </p>
           <div className="grid grid-cols-3 gap-4 text-center py-8">
-            <div className="flex flex-col items-center justify-start">
+            <div className="flex flex-col justify-between h-full">
               <p className="text-3xl font-bold text-[#E29B9B]">+500</p>
-              <p className="text-[#4A3B32]/70 font-medium text-sm">Productos</p>
+              <p className="text-[#4A3B32]/70 font-medium text-xs sm:text-sm mt-2">Productos</p>
             </div>
-            <div className="flex flex-col items-center justify-start">
+            <div className="flex flex-col justify-between h-full">
               <p className="text-3xl font-bold text-[#E29B9B]">+10K</p>
-              <p className="text-[#4A3B32]/70 font-medium text-sm">Clientes</p>
+              <p className="text-[#4A3B32]/70 font-medium text-xs sm:text-sm mt-2">Clientes Felices</p>
             </div>
-            <div className="flex flex-col items-center justify-start">
-              <p className="text-3xl font-bold text-[#E29B9B]">+2</p>
-              <p className="text-[#4A3B32]/70 font-medium text-sm">Años</p>
+            <div className="flex flex-col justify-between h-full">
+              <p className="text-3xl font-bold text-[#E29B9B]">+2 Años</p>
+              <p className="text-[#4A3B32]/70 font-medium text-xs sm:text-sm mt-2">En el Mercado</p>
             </div>
           </div>
         </div>
