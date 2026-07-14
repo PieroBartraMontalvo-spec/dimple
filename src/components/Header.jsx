@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store';
+import logo from '../assets/dimple-logo.png';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -11,12 +12,14 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
-            D
-          </div>
-          <span className="font-bold text-xl text-pink-600">Dimple</span>
-        </Link>
+        {/* Logo */}
+<Link to="/" className="flex items-center">
+  <img
+    src={logo}
+    alt="Dimple"
+    className="h-16 md:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105"
+  />
+</Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-8 items-center">
