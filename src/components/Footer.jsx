@@ -35,8 +35,8 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold text-lg mb-4">Contacto</h4>
             <p className="text-sm mb-2">📧 Email: info@dimple.com</p>
-            <p className="text-sm mb-2">📱 WhatsApp: +1 (555) 123-4567</p>
-            <p className="text-sm mb-4">📍 Ciudad, País</p>
+            <p className="text-sm mb-2">📱 WhatsApp: +51 956 949 147</p>
+            <p className="text-sm mb-4">📍 Ciudad Pucallpa, Perú</p>
             <div className="flex gap-3">
               <a href="#" className="text-pink-500 hover:text-pink-400 text-lg">f</a>
               <a href="#" className="text-pink-500 hover:text-pink-400 text-lg">📷</a>
@@ -51,12 +51,12 @@ export default function Footer() {
             <p>&copy; 2024 Dimple. Todos los derechos reservados.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Visa_logo.svg/1200px-Visa_logo.svg.png"
+                src="https://w7.pngwing.com/pngs/20/987/png-transparent-logo-visa-credit-card-business-visa-text-trademark-payment.png"
                 alt="Visa"
                 className="h-6"
               />
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_logo.svg"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/1280px-MasterCard_Logo.svg.png"
                 alt="Mastercard"
                 className="h-6"
               />
