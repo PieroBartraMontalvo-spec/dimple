@@ -9,7 +9,6 @@ export default function Header() {
   const cartTotal = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    // Se cambió bg-white por bg-[#FFF5F3] para mimetizarse con el fondo del logo
     <header className="sticky top-0 z-50 bg-[#FFF5F3] shadow-md">
       <nav className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
@@ -22,7 +21,6 @@ export default function Header() {
         </Link>
 
         {/* Desktop Menu */}
-        {/* Se actualizaron los textos a text-[#4A3B32] (chocolate) y el hover a hover:text-[#E29B9B] (rosa logo) */}
         <div className="hidden md:flex gap-8 items-center">
           <Link to="/" className="text-[#4A3B32] hover:text-[#E29B9B] font-medium transition-colors duration-200">
             Inicio
@@ -37,18 +35,18 @@ export default function Header() {
             Contacto
           </a>
         </div>
-    
+
         {/* Cart Icon and Mobile Menu */}
         <div className="flex items-center gap-3">
           <Link
             to="/carrito"
-            className="relative flex items-center gap-2 bg-pink-100 px-3 py-2 rounded-full text-pink-600 font-semibold hover:bg-pink-200 transition"
+            className="relative flex items-center gap-2 bg-[#E29B9B]/10 px-3 py-2 rounded-full text-[#E29B9B] font-semibold hover:bg-[#E29B9B]/20 transition"
             aria-label="Carrito"
           >
             <span className="text-lg">🛒</span>
             <span className="hidden sm:inline">Carrito</span>
             {cartTotal > 0 && (
-              <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+              <span className="absolute -top-2 -right-2 bg-[#E29B9B] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                 {cartTotal}
               </span>
             )}
@@ -56,7 +54,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-2xl p-2"
+            className="md:hidden text-2xl p-2 text-[#4A3B32]"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Abrir menú"
           >
@@ -67,25 +65,33 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-pink-50 border-t border-pink-200 p-4 space-y-3">
+        <div className="md:hidden bg-[#FFF5F3] border-t border-[#E29B9B]/20 p-4 space-y-3">
           <Link
             to="/"
-            className="block text-gray-700 hover:text-pink-600 font-medium"
+            className="block text-[#4A3B32] hover:text-[#E29B9B] font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             Inicio
           </Link>
           <Link
             to="/tienda"
-            className="block text-gray-700 hover:text-pink-600 font-medium"
+            className="block text-[#4A3B32] hover:text-[#E29B9B] font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             Tienda
           </Link>
-          <a href="#categorias" className="block text-gray-700 hover:text-pink-600 font-medium">
+          <a 
+            href="#categorias" 
+            className="block text-[#4A3B32] hover:text-[#E29B9B] font-medium"
+            onClick={() => setMobileMenuOpen(false)}
+          >
             Categorías
           </a>
-          <a href="#footer" className="block text-gray-700 hover:text-pink-600 font-medium">
+          <a 
+            href="#footer" 
+            className="block text-[#4A3B32] hover:text-[#E29B9B] font-medium"
+            onClick={() => setMobileMenuOpen(false)}
+          >
             Contacto
           </a>
         </div>
