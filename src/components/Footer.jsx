@@ -31,16 +31,6 @@ export default function Footer() {
             <p className="text-sm">Ropa interior y ropa para mujeres que se sienten hermosas y cómodas.</p>
           </div>
 
-          {/* Links de Categorías */}
-      <div>
-          <h4 className="text-white font-bold text-lg mb-4">Categorías</h4>
-          <ul className="text-sm space-y-2 text-gray-400">
-            <li>Brassieres</li>
-            <li>Pants</li>
-            <li>Conjuntos</li>
-            <li>Accesorios</li>
-          </ul>
-        </div>
           {/* Información */}
           <div>
             <h4 className="text-white font-bold text-lg mb-4">Información</h4>
