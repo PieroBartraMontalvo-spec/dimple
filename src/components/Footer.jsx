@@ -32,32 +32,15 @@ export default function Footer() {
           </div>
 
           {/* Links de Categorías */}
-          <div>
-            <h4 className="text-white font-bold text-lg mb-4">Categorías</h4>
-            <ul className="text-sm space-y-2">
-              <li>
-                <button onClick={() => handleCategoryClick('brassieres')} className="hover:text-pink-500 transition text-left w-full">
-                  Brassieres
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleCategoryClick('pants')} className="hover:text-pink-500 transition text-left w-full">
-                  Pants
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleCategoryClick('conjuntos')} className="hover:text-pink-500 transition text-left w-full">
-                  Conjuntos
-                </button>
-              </li>
-              <li>
-                <button onClick={() => handleCategoryClick('accesorios')} className="hover:text-pink-500 transition text-left w-full">
-                  Accesorios
-                </button>
-              </li>
-            </ul>
-          </div>
-
+      <div>
+          <h4 className="text-white font-bold text-lg mb-4">Categorías</h4>
+          <ul className="text-sm space-y-2 text-gray-400">
+            <li>Brassieres</li>
+            <li>Pants</li>
+            <li>Conjuntos</li>
+            <li>Accesorios</li>
+          </ul>
+        </div>
           {/* Información */}
           <div>
             <h4 className="text-white font-bold text-lg mb-4">Información</h4>
