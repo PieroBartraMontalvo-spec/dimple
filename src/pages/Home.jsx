@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { categories } from '../data/products';
-import { Layers, Shirt, ShoppingBag, Sparkles, Truck, ShieldCheck, CreditCard, Star, ArrowRight } from 'lucide-react';
+import { Layers, MoonStar, Heart, Sparkles, Truck, ShieldCheck, CreditCard, Star, ArrowRight } from 'lucide-react';
 
 const iconMap = {
   'brassieres': <Layers size={36} />,
-  'crop-top': <Shirt size={36} />,
-  'vestidos': <ShoppingBag size={36} />,
+  'panties': <Heart size={36} />,
+  'conjuntos': <Sparkles size={36} />,
+  'pijamas': <MoonStar size={36} />,
   'accesorios': <Sparkles size={36} />
 };
 
@@ -91,9 +92,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: <Truck size={36} />, title: 'Envío Rápido', desc: '+500 localidades' },
+              { icon: <Truck size={36} />, title: 'Envíos', desc: 'Coordinación rápida' },
               { icon: <ShieldCheck size={36} />, title: '100% Seguro', desc: 'Compra con confianza' },
-              { icon: <CreditCard size={36} />, title: 'Pago Flexible', desc: 'Múltiples opciones' },
+              { icon: <CreditCard size={36} />, title: 'Pago Flexible', desc: 'Yape, Plin o transferencia' },
               { icon: <Star size={36} />, title: '100% Satisfacción', desc: 'Garantizado' },
             ].map((benefit, idx) => (
               <div key={idx} className="flex flex-col items-center text-center group">
@@ -109,7 +110,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="py-16 bg-white">
+      <section id="about" className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6 text-[#4A3B32] tracking-wide">SOBRE DIMPLE</h2>
           <p className="text-[#4A3B32]/80 mb-4 text-lg leading-relaxed">
@@ -120,16 +121,16 @@ export default function Home() {
           </p>
           <div className="grid grid-cols-3 gap-4 text-center py-8">
             <div className="flex flex-col justify-between h-full">
-              <p className="text-3xl font-bold text-[#E29B9B]">+500</p>
-              <p className="text-[#4A3B32]/70 font-medium text-xs sm:text-sm mt-2">Productos</p>
+              <p className="text-2xl font-bold text-[#E29B9B]">Atención</p>
+              <p className="text-[#4A3B32]/70 font-medium text-xs sm:text-sm mt-2">Personalizada</p>
             </div>
             <div className="flex flex-col justify-between h-full">
-              <p className="text-3xl font-bold text-[#E29B9B]">+10K</p>
-              <p className="text-[#4A3B32]/70 font-medium text-xs sm:text-sm mt-2">Clientes Felices</p>
+              <p className="text-2xl font-bold text-[#E29B9B]">Pucallpa</p>
+              <p className="text-[#4A3B32]/70 font-medium text-xs sm:text-sm mt-2">Ucayali</p>
             </div>
             <div className="flex flex-col justify-between h-full">
-              <p className="text-3xl font-bold text-[#E29B9B]">+2 Años</p>
-              <p className="text-[#4A3B32]/70 font-medium text-xs sm:text-sm mt-2">En el Mercado</p>
+              <p className="text-2xl font-bold text-[#E29B9B]">Compra fácil</p>
+              <p className="text-[#4A3B32]/70 font-medium text-xs sm:text-sm mt-2">Por WhatsApp</p>
             </div>
           </div>
         </div>

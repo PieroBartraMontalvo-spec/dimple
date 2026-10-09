@@ -1,42 +1,60 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-export const useStore = create((set) => ({
-  cart: [],
-  favorites: [],
+const getCartId = (product) => [
+  product.id,
+  product.selectedColor || product.colors?.[0] || '',
+  product.selectedSize || product.sizes?.[0] || '',
+].join('-');
 
-  addToCart: (product) => set((state) => {
-    const existingItem = state.cart.find((item) => item.id === product.id);
-    if (existingItem) {
-      return {
-        cart: state.cart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        ),
-      };
-    }
-    return { cart: [...state.cart, { ...product, quantity: 1 }] };
-  }),
+export const useStore = create(
+  persist(
+    (set) => ({
+      cart: [],
+      favorites: [],
 
-  removeFromCart: (productId) => set((state) => ({
-    cart: state.cart.filter((item) => item.id !== productId),
-  })),
+      addToCart: (product) => set((state) => {
+        const cartId = getCartId(product);
+        const incomingQuantity = Math.max(1, Number(product.quantity) || 1);
+        const existingItem = state.cart.find((item) => item.cartId === cartId);
 
-  updateQuantity: (productId, quantity) => set((state) => ({
-    cart: state.cart.map((item) =>
-      item.id === productId ? { ...item, quantity } : item
-    ).filter((item) => item.quantity > 0),
-  })),
+        if (existingItem) {
+          return {
+            cart: state.cart.map((item) => item.cartId === cartId
+              ? { ...item, quantity: item.quantity + incomingQuantity }
+              : item),
+          };
+        }
 
-  toggleFavorite: (product) => set((state) => {
-    const isFavorite = state.favorites.find((item) => item.id === product.id);
-    if (isFavorite) {
-      return {
-        favorites: state.favorites.filter((item) => item.id !== product.id),
-      };
-    }
-    return { favorites: [...state.favorites, product] };
-  }),
+        return {
+          cart: [...state.cart, { ...product, cartId, quantity: incomingQuantity }],
+        };
+      }),
 
-  clearCart: () => set({ cart: [] }),
-}));
+      removeFromCart: (cartId) => set((state) => ({
+        cart: state.cart.filter((item) => item.cartId !== cartId),
+      })),
+
+      updateQuantity: (cartId, quantity) => set((state) => ({
+        cart: state.cart
+          .map((item) => item.cartId === cartId ? { ...item, quantity } : item)
+          .filter((item) => item.quantity > 0),
+      })),
+
+      toggleFavorite: (product) => set((state) => {
+        const isFavorite = state.favorites.some((item) => item.id === product.id);
+        return {
+          favorites: isFavorite
+            ? state.favorites.filter((item) => item.id !== product.id)
+            : [...state.favorites, product],
+        };
+      }),
+
+      clearCart: () => set({ cart: [] }),
+    }),
+    {
+      name: 'dimple-shopping',
+      partialize: (state) => ({ cart: state.cart, favorites: state.favorites }),
+    },
+  ),
+);

@@ -10,6 +10,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(product?.colors[0] || '');
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || '');
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const addToCart = useStore((state) => state.addToCart);
   const favorites = useStore((state) => state.favorites);
   const toggleFavorite = useStore((state) => state.toggleFavorite);
@@ -37,7 +38,8 @@ export default function ProductDetail() {
       selectedSize,
       quantity,
     });
-    alert(`✓ ${quantity} x ${product.name} agregado al carrito`);
+    setShowConfirmation(true);
+    window.setTimeout(() => setShowConfirmation(false), 2200);
     setQuantity(1);
   };
 
@@ -87,8 +89,8 @@ export default function ProductDetail() {
 
             {/* Price */}
             <div className="mb-6 pb-6 border-b-2 border-gray-200">
-              <p className="text-3xl font-bold text-pink-600">${product.price}</p>
-              <p className="text-gray-600 text-sm mt-2">Envío gratis a nivel nacional</p>
+              <p className="text-3xl font-bold text-pink-600">S/ {product.price.toFixed(2)}</p>
+              <p className="text-gray-600 text-sm mt-2">Entrega coordinada por WhatsApp</p>
             </div>
 
             {/* Description */}
@@ -194,6 +196,11 @@ export default function ProductDetail() {
           </div>
         )}
       </div>
+      {showConfirmation && (
+        <div className="fixed bottom-5 left-1/2 z-[70] -translate-x-1/2 rounded-full bg-[#4A3B32] px-5 py-3 text-sm font-semibold text-white shadow-xl" role="status">
+          ✓ {product.name} agregado al carrito
+        </div>
+      )}
     </div>
   );
 }

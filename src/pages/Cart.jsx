@@ -8,9 +8,24 @@ export default function Cart() {
   const clearCart = useStore((state) => state.clearCart);
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const shipping = subtotal > 50 ? 0 : 5;
-  const tax = subtotal * 0.1;
-  const total = subtotal + shipping + tax;
+
+  const handleWhatsAppOrder = () => {
+    const lines = cart.map((item) => {
+      const variants = [item.selectedColor && `Color: ${item.selectedColor}`, item.selectedSize && `Talla: ${item.selectedSize}`]
+        .filter(Boolean)
+        .join(', ');
+      return `• ${item.quantity} x ${item.name}${variants ? ` (${variants})` : ''} — S/ ${(item.price * item.quantity).toFixed(2)}`;
+    });
+    const message = [
+      'Hola Dimple, quiero realizar este pedido:',
+      '',
+      ...lines,
+      '',
+      `Total de productos: S/ ${subtotal.toFixed(2)}`,
+      'Por favor, confírmame disponibilidad, forma de pago y costo de envío.',
+    ].join('\n');
+    window.open(`https://wa.me/51956949147?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+  };
 
   if (cart.length === 0) {
     return (
@@ -39,7 +54,7 @@ export default function Cart() {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {cart.map((item) => (
-              <div key={item.id} className="bg-white rounded-lg shadow-md p-6 flex gap-6">
+              <div key={item.cartId} className="bg-white rounded-lg shadow-md p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6">
                 {/* Image */}
                 <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                   <img
@@ -68,34 +83,34 @@ export default function Cart() {
                       Talla: <span className="font-semibold">{item.selectedSize}</span>
                     </p>
                   )}
-                  <p className="text-pink-600 font-bold mt-2">${item.price}</p>
+                  <p className="text-pink-600 font-bold mt-2">S/ {item.price.toFixed(2)}</p>
                 </div>
 
                 {/* Quantity and Remove */}
                 <div className="flex flex-col items-end gap-4">
                   <div className="flex items-center gap-2 border border-gray-300 rounded-lg">
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      onClick={() => updateQuantity(item.cartId, item.quantity - 1)}
                       className="px-3 py-1 hover:bg-gray-100 transition"
                     >
                       −
                     </button>
                     <span className="px-3 py-1 font-semibold w-8 text-center">{item.quantity}</span>
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.cartId, item.quantity + 1)}
                       className="px-3 py-1 hover:bg-gray-100 transition"
                     >
                       +
                     </button>
                   </div>
                   <button
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() => removeFromCart(item.cartId)}
                     className="text-red-600 hover:text-red-700 font-semibold text-sm transition"
                   >
                     ✕ Eliminar
                   </button>
                   <p className="font-bold text-gray-900">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    S/ {(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
               </div>
@@ -110,33 +125,21 @@ export default function Cart() {
               <div className="space-y-3 mb-6 pb-6 border-b-2 border-gray-200">
                 <div className="flex justify-between">
                   <span className="text-gray-700">Subtotal:</span>
-                  <span className="font-semibold">${subtotal.toFixed(2)}</span>
+                  <span className="font-semibold">S/ {subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-700">Envío:</span>
-                  <span className="font-semibold text-pink-600">
-                    {shipping === 0 ? '¡GRATIS!' : `$${shipping.toFixed(2)}`}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Impuestos (10%):</span>
-                  <span className="font-semibold">${tax.toFixed(2)}</span>
+                  <span className="font-semibold text-pink-600">A coordinar</span>
                 </div>
               </div>
 
               <div className="flex justify-between mb-6 text-lg">
                 <span className="font-bold text-gray-900">TOTAL:</span>
-                <span className="font-bold text-pink-600 text-xl">${total.toFixed(2)}</span>
+                <span className="font-bold text-pink-600 text-xl">S/ {subtotal.toFixed(2)}</span>
               </div>
 
-              {subtotal <= 50 && (
-                <div className="bg-pink-50 border border-pink-200 p-3 rounded-lg mb-6 text-sm text-gray-700">
-                  💡 ¡Compra ${(50 - subtotal).toFixed(2)} más para obtener envío gratis!
-                </div>
-              )}
-
-              <button className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-3 rounded-lg font-bold hover:from-pink-600 hover:to-pink-700 transition mb-3">
-                PROCEDER AL PAGO
+              <button onClick={handleWhatsAppOrder} className="w-full bg-[#25D366] text-white py-3 rounded-lg font-bold hover:bg-[#1fb85a] transition mb-3">
+                PEDIR POR WHATSAPP
               </button>
 
               <button
@@ -157,10 +160,9 @@ export default function Cart() {
               <div className="mt-8 pt-6 border-t border-gray-200">
                 <p className="text-sm text-gray-600 mb-4 font-semibold">MÉTODOS DE PAGO</p>
                 <div className="space-y-2 text-sm text-gray-600">
-                  <p>💳 Tarjeta de Crédito/Débito</p>
-                  <p>📱 Billetera Digital</p>
+                  <p>📱 Yape o Plin</p>
                   <p>💰 Transferencia Bancaria</p>
-                  <p>🏦 Pago en Efectivo</p>
+                  <p>💵 Pago en efectivo coordinado</p>
                 </div>
               </div>
             </div>

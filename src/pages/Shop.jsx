@@ -1,358 +1,113 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
-import { products, categories } from '../data/products';
+import { categories, products } from '../data/products';
+
+const maximumPrice = Math.ceil(Math.max(...products.map((product) => product.price)) / 10) * 10;
 
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [priceRange, setPriceRange] = useState([0, 100]);
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('cat') || '');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('featured');
-
-  // Filtered products
-  const filteredProducts = useMemo(() => {
-    let filtered = products;
-
-    // Filter by category
-    if (selectedCategory) {
-      filtered = filtered.filter((p) => p.category === selectedCategory);
-    }
-
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter((p) =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Filter by price range
-    filtered = filtered.filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1]);
-
-    // Sort
-    switch (sortBy) {
-      case 'price-low':
-        filtered.sort((a, b) => a.price - b.price);
-        break;
-      case 'price-high':
-        filtered.sort((a, b) => b.price - a.price);
-        break;
-      case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating);
-        break;
-      case 'newest':
-        filtered.sort((a, b) => b.id - a.id);
-        break;
-      default:
-        break;
-    }
-
-    return filtered;
-  }, [selectedCategory, searchTerm, priceRange, sortBy]);
-
-  const handleCategoryChange = (catId) => {
-    setSelectedCategory(catId);
-    if (catId) {
-      setSearchParams({ cat: catId });
-    } else {
-      setSearchParams({});
-    }
-  };
-
-  return (
-    <div className="py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <h1 className="text-4xl font-bold mb-8 text-gray-900">TIENDA</h1>
-
-        {/* Search Bar */}
-        <div className="mb-8">
-          <input
-            type="text"
-            placeholder="🔍 Buscar productos..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-pink-600 transition"
-          />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            {/* Categories Filter */}
-            <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-              <h3 className="font-bold text-lg mb-4 text-gray-900">CATEGORÍAS</h3>
-              <div className="space-y-2">
-                <button
-                  onClick={() => handleCategoryChange('')}
-                  className={`w-full text-left px-3 py-2 rounded-lg transition ${
-                    selectedCategory === ''
-                      ? 'bg-pink-600 text-white'
-                      : 'hover:bg-pink-50'
-                  }`}
-                >
-                  Todas
-                </button>
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => handleCategoryChange(cat.id)}
-                    className={`w-full text-left px-3 py-2 rounded-lg transition ${
-                      selectedCategory === cat.id
-                        ? 'bg-pink-600 text-white'
-                        : 'hover:bg-pink-50'
-                    }`}
-                  >
-                    {cat.icon} {cat.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Price Filter */}
-            <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-              <h3 className="font-bold text-lg mb-4 text-gray-900">PRECIO</h3>
-              <div className="space-y-4">
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={priceRange[1]}
-                  onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                  className="w-full"
-                />
-                <div className="text-center">
-                  <span className="font-semibold text-pink-600">
-                    ${priceRange[0]} - ${priceRange[1]}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Sort */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-bold text-lg mb-4 text-gray-900">ORDENAR POR</h3>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-pink-600"
-              >
-                <option value="featured">Destacados</option>
-                <option value="newest">Más Nuevos</option>
-                <option value="price-low">Precio: Menor a Mayor</option>
-                <option value="price-high">Precio: Mayor a Menor</option>
-                <option value="rating">Mejor Calificados</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Products Grid */}
-          <div className="lg:col-span-3">
-            {/* Results Count */}
-            <div className="mb-6 flex justify-between items-center">
-              <p className="text-gray-700 font-semibold">
-                {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
-              </p>
-            </div>
-
-            {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-16">
-                <p className="text-2xl text-gray-500 mb-4">😔</p>
-                <p className="text-xl text-gray-700">No se encontraron productos</p>
-                <p className="text-gray-600 mt-2">Intenta con otros filtros</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import ProductCard from '../components/ProductCard';
-import { products, categories } from '../data/products';
-
-export default function Shop() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [priceLimit, setPriceLimit] = useState(maximumPrice);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('featured');
 
-  // Sincronizar el estado de la categoría con los cambios en la URL (Query Params)
   useEffect(() => {
-    const catFromUrl = searchParams.get('cat') || '';
-    setSelectedCategory(catFromUrl);
+    setSelectedCategory(searchParams.get('cat') || '');
   }, [searchParams]);
 
-  // Filtered products
   const filteredProducts = useMemo(() => {
-    let filtered = products;
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+    const filtered = products.filter((product) => {
+      const matchesCategory = !selectedCategory || product.category === selectedCategory;
+      const matchesSearch = !normalizedSearch
+        || product.name.toLowerCase().includes(normalizedSearch)
+        || product.description.toLowerCase().includes(normalizedSearch);
+      return matchesCategory && matchesSearch && product.price <= priceLimit;
+    });
 
-    // Filter by category
-    if (selectedCategory) {
-      filtered = filtered.filter((p) => p.category === selectedCategory);
-    }
+    return [...filtered].sort((a, b) => {
+      if (sortBy === 'price-low') return a.price - b.price;
+      if (sortBy === 'price-high') return b.price - a.price;
+      if (sortBy === 'rating') return b.rating - a.rating;
+      if (sortBy === 'newest') return b.id - a.id;
+      return 0;
+    });
+  }, [selectedCategory, searchTerm, priceLimit, sortBy]);
 
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter((p) =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.description.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Filter by price range
-    filtered = filtered.filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1]);
-
-    // Sort
-    switch (sortBy) {
-      case 'price-low':
-        filtered.sort((a, b) => a.price - b.price);
-        break;
-      case 'price-high':
-        filtered.sort((a, b) => b.price - a.price);
-        break;
-      case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating);
-        break;
-      case 'newest':
-        filtered.sort((a, b) => b.id - a.id);
-        break;
-      default:
-        break;
-    }
-
-    return filtered;
-  }, [selectedCategory, searchTerm, priceRange, sortBy]);
-
-  const handleCategoryChange = (catId) => {
-    setSelectedCategory(catId);
-    if (catId) {
-      setSearchParams({ cat: catId });
-    } else {
-      setSearchParams({});
-    }
+  const handleCategoryChange = (categoryId) => {
+    if (categoryId) setSearchParams({ cat: categoryId });
+    else setSearchParams({});
   };
 
   return (
-    <div className="py-8">
+    <div className="bg-[#FFF9F8] py-8 md:py-12">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <h1 className="text-4xl font-bold mb-8 text-gray-900">TIENDA</h1>
-
-        {/* Search Bar */}
         <div className="mb-8">
-          <input
-            type="text"
-            placeholder="🔍 Buscar productos..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-pink-600 transition"
-          />
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#E29B9B]">Colección Dimple</p>
+          <h1 className="mt-2 text-3xl md:text-4xl font-bold text-[#4A3B32]">Encuentra tu estilo</h1>
+          <p className="mt-2 text-[#4A3B32]/70">Prendas pensadas para sentirte cómoda, segura y hermosa.</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            {/* Categories Filter */}
-            <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-              <h3 className="font-bold text-lg mb-4 text-gray-900">CATEGORÍAS</h3>
+        <label className="block mb-8">
+          <span className="sr-only">Buscar productos</span>
+          <input
+            type="search"
+            placeholder="Buscar por nombre o descripción…"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            className="w-full rounded-2xl border border-[#E29B9B]/30 bg-white px-5 py-4 shadow-sm outline-none transition focus:border-[#E29B9B] focus:ring-4 focus:ring-[#E29B9B]/10"
+          />
+        </label>
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
+          <aside className="space-y-5 lg:col-span-1">
+            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#E29B9B]/10">
+              <h2 className="mb-4 font-bold text-[#4A3B32]">Categorías</h2>
               <div className="space-y-2">
-                <button
-                  onClick={() => handleCategoryChange('')}
-                  className={`w-full text-left px-3 py-2 rounded-lg transition ${
-                    selectedCategory === ''
-                      ? 'bg-pink-600 text-white'
-                      : 'hover:bg-pink-50'
-                  }`}
-                >
-                  Todas
-                </button>
-                {categories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => handleCategoryChange(cat.id)}
-                    className={`w-full text-left px-3 py-2 rounded-lg transition ${
-                      selectedCategory === cat.id
-                        ? 'bg-pink-600 text-white'
-                        : 'hover:bg-pink-50'
-                    }`}
-                  >
-                    {cat.icon} {cat.name}
+                <button type="button" onClick={() => handleCategoryChange('')} className={`w-full rounded-xl px-4 py-2.5 text-left transition ${!selectedCategory ? 'bg-[#E29B9B] text-white' : 'hover:bg-[#FFF5F3]'}`}>Todas</button>
+                {categories.map((category) => (
+                  <button type="button" key={category.id} onClick={() => handleCategoryChange(category.id)} className={`w-full rounded-xl px-4 py-2.5 text-left transition ${selectedCategory === category.id ? 'bg-[#E29B9B] text-white' : 'hover:bg-[#FFF5F3]'}`}>
+                    {category.name}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Price Filter */}
-            <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-              <h3 className="font-bold text-lg mb-4 text-gray-900">PRECIO</h3>
-              <div className="space-y-4">
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={priceRange[1]}
-                  onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                  className="w-full"
-                />
-                <div className="text-center">
-                  <span className="font-semibold text-pink-600">
-                    ${priceRange[0]} - ${priceRange[1]}
-                  </span>
-                </div>
+            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#E29B9B]/10">
+              <div className="flex items-center justify-between">
+                <h2 className="font-bold text-[#4A3B32]">Precio máximo</h2>
+                <span className="font-bold text-[#E29B9B]">S/ {priceLimit}</span>
               </div>
+              <input type="range" min="0" max={maximumPrice} step="5" value={priceLimit} onChange={(event) => setPriceLimit(Number(event.target.value))} className="mt-5 w-full accent-[#E29B9B]" />
             </div>
 
-            {/* Sort */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-bold text-lg mb-4 text-gray-900">ORDENAR POR</h3>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-3 py-2 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-pink-600"
-              >
+            <label className="block rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#E29B9B]/10">
+              <span className="mb-3 block font-bold text-[#4A3B32]">Ordenar por</span>
+              <select value={sortBy} onChange={(event) => setSortBy(event.target.value)} className="w-full rounded-xl border border-[#E29B9B]/30 px-3 py-2.5 outline-none focus:border-[#E29B9B]">
                 <option value="featured">Destacados</option>
-                <option value="newest">Más Nuevos</option>
-                <option value="price-low">Precio: Menor a Mayor</option>
-                <option value="price-high">Precio: Mayor a Menor</option>
-                <option value="rating">Mejor Calificados</option>
+                <option value="newest">Más nuevos</option>
+                <option value="price-low">Precio: menor a mayor</option>
+                <option value="price-high">Precio: mayor a menor</option>
+                <option value="rating">Mejor calificados</option>
               </select>
-            </div>
-          </div>
+            </label>
+          </aside>
 
-          {/* Products Grid */}
-          <div className="lg:col-span-3">
-            {/* Results Count */}
-            <div className="mb-6 flex justify-between items-center">
-              <p className="text-gray-700 font-semibold">
-                {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
-              </p>
-            </div>
-
-            {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+          <section className="lg:col-span-3" aria-live="polite">
+            <p className="mb-5 font-medium text-[#4A3B32]/70">{filteredProducts.length} producto{filteredProducts.length === 1 ? '' : 's'}</p>
+            {filteredProducts.length ? (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                {filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
               </div>
             ) : (
-              <div className="text-center py-16">
-                <p className="text-2xl text-gray-500 mb-4">😔</p>
-                <p className="text-xl text-gray-700">No se encontraron productos</p>
-                <p className="text-gray-600 mt-2">Intenta con otros filtros</p>
+              <div className="rounded-2xl bg-white px-6 py-16 text-center shadow-sm">
+                <p className="text-xl font-bold text-[#4A3B32]">No encontramos productos</p>
+                <p className="mt-2 text-gray-600">Prueba otra categoría, búsqueda o precio.</p>
+                <button type="button" onClick={() => { setSearchTerm(''); setPriceLimit(maximumPrice); handleCategoryChange(''); }} className="mt-5 rounded-xl bg-[#E29B9B] px-5 py-2.5 font-semibold text-white">Limpiar filtros</button>
               </div>
             )}
-          </div>
+          </section>
         </div>
       </div>
     </div>

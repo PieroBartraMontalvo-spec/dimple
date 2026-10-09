@@ -2,7 +2,7 @@ export const products = [
   {
     id: 1,
     name: 'Conjunto Encaje Rosa',
-    category: 'vestidos', // <-- Cambiado de 'conjuntos' a 'vestidos'
+    category: 'conjuntos',
     price: 59.90,
     image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&h=500&fit=crop',
     description: 'Conjunto completo de encaje en color rosa suave. Cómodo y elegante.',
@@ -26,7 +26,7 @@ export const products = [
   {
     id: 3,
     name: 'Panty Cómodo Rosa',
-    category: 'crop-top', // <-- Cambiado de 'pants' a 'crop-top'
+    category: 'panties',
     price: 22.90,
     image: 'https://images.unsplash.com/photo-1572157295069-a14b5d6e8550?w=400&h=500&fit=crop',
     description: 'Panty sin costuras, máxima comodidad durante todo el día.',
@@ -38,7 +38,7 @@ export const products = [
   {
     id: 4,
     name: 'Conjunto Negro Clásico',
-    category: 'vestidos', // <-- Cambiado de 'conjuntos' a 'vestidos'
+    category: 'conjuntos',
     price: 54.90,
     image: 'https://images.unsplash.com/photo-1613336023908-70a128e95f86?w=400&h=500&fit=crop',
     description: 'Clásico conjunto negro con diseño atemporal y elegante.',
@@ -62,7 +62,7 @@ export const products = [
   {
     id: 7,
     name: 'Panty Deportivo',
-    category: 'crop-top', // <-- Cambiado de 'pants' a 'crop-top'
+    category: 'panties',
     price: 28.90,
     image: 'https://images.unsplash.com/photo-1510884387123-35caf3dbe3b1?w=400&h=500&fit=crop',
     description: 'Panty especialmente diseñado para actividad física.',
@@ -98,7 +98,7 @@ export const products = [
   {
     id: 10,
     name: 'Ropa de Dormir Negra',
-    category: 'vestidos', // <-- Cambiado de 'conjuntos' a 'vestidos'
+    category: 'pijamas',
     price: 52.90,
     image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&h=500&fit=crop',
     description: 'Camisón elegante de seda para noches especiales.',
@@ -110,7 +110,7 @@ export const products = [
   {
     id: 11,
     name: 'Panty Talle Alto',
-    category: 'crop-top', // <-- Cambiado de 'pants' a 'crop-top'
+    category: 'panties',
     price: 26.90,
     image: 'https://images.unsplash.com/photo-1599643478941-9831a32bc5d3?w=400&h=500&fit=crop',
     description: 'Panty de talle alto con efecto moldea tu figura.',
@@ -135,7 +135,8 @@ export const products = [
 
 export const categories = [
   { id: 'brassieres', name: 'Brassieres' },
-  { id: 'crop-top', name: 'Crop top' },
-  { id: 'vestidos', name: 'Vestidos' },
+  { id: 'panties', name: 'Panties' },
+  { id: 'conjuntos', name: 'Conjuntos' },
+  { id: 'pijamas', name: 'Pijamas' },
   { id: 'accesorios', name: 'Accesorios' }
 ];

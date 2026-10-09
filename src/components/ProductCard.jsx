@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../store';
 
 export default function ProductCard({ product }) {
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const addToCart = useStore((state) => state.addToCart);
   const favorites = useStore((state) => state.favorites);
   const toggleFavorite = useStore((state) => state.toggleFavorite);
@@ -9,8 +11,13 @@ export default function ProductCard({ product }) {
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    addToCart(product);
-    alert(`✓ ${product.name} agregado al carrito`);
+    addToCart({
+      ...product,
+      selectedColor: product.colors?.[0],
+      selectedSize: product.sizes?.[0],
+    });
+    setShowConfirmation(true);
+    window.setTimeout(() => setShowConfirmation(false), 2200);
   };
 
   return (
@@ -48,7 +55,7 @@ export default function ProductCard({ product }) {
 
           {/* Price */}
           <div className="mt-3 flex items-center justify-between">
-            <span className="text-lg font-bold text-pink-600">${product.price}</span>
+            <span className="text-lg font-bold text-pink-600">S/ {product.price.toFixed(2)}</span>
             <span className="text-xs text-gray-500">({product.reviews} reseñas)</span>
           </div>
 
@@ -61,6 +68,11 @@ export default function ProductCard({ product }) {
           </button>
         </div>
       </div>
+      {showConfirmation && (
+        <div className="fixed bottom-5 left-1/2 z-[70] -translate-x-1/2 rounded-full bg-[#4A3B32] px-5 py-3 text-sm font-semibold text-white shadow-xl" role="status">
+          ✓ Producto agregado al carrito
+        </div>
+      )}
     </Link>
   );
 }

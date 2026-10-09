@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -16,8 +16,8 @@ export default function Footer() {
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: 'smooth' });
     } else {
-      navigate('/sobre-nosotros');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      navigate('/');
+      window.setTimeout(() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }), 100);
     }
   };
 
@@ -30,14 +30,13 @@ export default function Footer() {
             <h4 className="text-white font-bold text-lg mb-4">Dimple</h4>
             <p className="text-sm">Ropa interior y ropa para mujeres que se sienten hermosas y cómodas.</p>
           </div>
-    {/* Cambiado a texto plano para evitar redirecciones */}
         <div>
           <h4 className="text-white font-bold text-lg mb-4">Categorías</h4>
-          <ul className="text-sm space-y-2 text-gray-400">
-            <li>Brassieres</li>
-            <li>Pants</li>
-            <li>Conjuntos</li>
-            <li>Accesorios</li>
+          <ul className="text-sm space-y-2">
+            <li><button type="button" onClick={() => handleCategoryClick('brassieres')} className="hover:text-pink-500 transition">Brassieres</button></li>
+            <li><button type="button" onClick={() => handleCategoryClick('panties')} className="hover:text-pink-500 transition">Panties</button></li>
+            <li><button type="button" onClick={() => handleCategoryClick('conjuntos')} className="hover:text-pink-500 transition">Conjuntos</button></li>
+            <li><button type="button" onClick={() => handleCategoryClick('pijamas')} className="hover:text-pink-500 transition">Pijamas</button></li>
           </ul>
         </div>
           {/* Información */}
@@ -49,28 +48,15 @@ export default function Footer() {
                   Sobre Nosotros
                 </a>
               </li>
-              <li>
-                <Link to="/politicas-de-privacidad" className="hover:text-pink-500 transition block">
-                  Políticas de Privacidad
-                </Link>
-              </li>
-              <li>
-                <Link to="/terminos-y-condiciones" className="hover:text-pink-500 transition block">
-                  Términos y Condiciones
-                </Link>
-              </li>
-              <li>
-                <Link to="/envios-y-devoluciones" className="hover:text-pink-500 transition block">
-                  Envíos y Devoluciones
-                </Link>
-              </li>
+              <li>Atención personalizada</li>
+              <li>Pedidos por WhatsApp</li>
+              <li>Envíos coordinados</li>
             </ul>
           </div>
 
           {/* Contacto */}
           <div>
             <h4 className="text-white font-bold text-lg mb-4">Contacto</h4>
-            <p className="text-sm mb-2">📧 Email: info@dimple.com</p>
             <p className="text-sm mb-2">
               📱 WhatsApp:{' '}
               <a 
@@ -84,18 +70,7 @@ export default function Footer() {
             </p>
             <p className="text-sm mb-4">📍 Ciudad Pucallpa, Perú</p>
             
-            {/* Redes Sociales Reales */}
-            <div className="flex gap-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:text-pink-400 text-lg transition">
-                f
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:text-pink-400 text-lg transition">
-                📷
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-pink-500 hover:text-pink-400 text-lg transition">
-                𝕏
-              </a>
-            </div>
+            <p className="text-xs text-gray-400">Atendemos consultas y pedidos directamente.</p>
           </div>
         </div>
 
@@ -103,23 +78,7 @@ export default function Footer() {
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm">
             <p>&copy; 2026 Dimple. Todos los derechos reservados.</p>
-            <div className="flex gap-6 mt-4 md:mt-0">
-              <img
-                src="https://w7.pngwing.com/pngs/20/987/png-transparent-logo-visa-credit-card-business-visa-text-trademark-payment.png"
-                alt="Visa"
-                className="h-6"
-              />
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/1280px-MasterCard_Logo.svg.png"
-                alt="Mastercard"
-                className="h-6"
-              />
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
-                alt="PayPal"
-                className="h-6"
-              />
-            </div>
+            <p className="mt-4 text-xs text-gray-400 md:mt-0">Pucallpa, Ucayali</p>
           </div>
         </div>
       </div>
